@@ -43,5 +43,13 @@ r("loadPayments();setInterval(()=>{if(Date.now()>=nextUpdate)loadPayments();else
     },1000);""")
 r('100 posições para carteiras e histórico de pagamentos.', 'Até 100 carteiras no histórico. Novas transferências são exibidas quando registradas.')
 r('As 100 posições são reservadas para registros de carteiras. Os status <b>Pago</b> e <b>Pendente</b> aparecem quando houver transferências confirmadas e solicitações reais.', 'O histórico é conferido a cada hora, com ciclos de 48 horas. <b>Pago</b> indica transferência confirmada na Solana; <b>Pendente</b> indica solicitação registrada. Posições sem cadastro não representam pagamentos.')
+# Corrigir também o período dos ganhos: antes ainda aparecia "10 dias".
+r('const countDays=10;','const countDays=2;')
+r('120 BSHIBA/dia, por até 10 dias','120 BSHIBA/dia, por até 48 horas')
+r('<small>Período de cálculo</small><b>10 dias</b>', '<small>Período de cálculo</small><b>48 horas</b>')
+# A referência total de R$ 25 é dividida em dois dias, não em dez.
+r('<small>Referência por dia</small><b>R$ 2,50</b>','<small>Referência por dia</small><b>R$ 12,50</b>')
+if '10 dias' in s or '15 dias' in s or 'withdrawDays' in s:
+    raise RuntimeError('Ainda resta texto ou lógica com prazo antigo (10/15 dias).')
 p.write_text(s,encoding='utf-8')
 print('Atualizada contagem de 48h, relógio permanente e datas.')
