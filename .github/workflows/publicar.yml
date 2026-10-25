@@ -45,3 +45,5 @@ jobs:
       - name: Publicar
         id: deploy
         uses: actions/deploy-pages@v4
+
+# Publicação reiniciada após ativar GitHub Actions no Pages.
