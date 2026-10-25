@@ -37,7 +37,7 @@ jobs:
           p.write_text(html,encoding='utf-8')
           PY
           python3 tools/wallet_slots.py public/index.html
-          python3 tools/site_48h.py public/index.html
+          python3 tools/publicar_revisado.py public/index.html
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
       - name: Enviar site
