@@ -1,0 +1,47 @@
+name: Publicar Big Shiba Coin
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+      - name: Preparar arquivos do site
+        run: |
+          mkdir -p public
+          unzip -o big-shiba-github-pages.zip -d public
+          test -s public/index.html
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('public/index.html')
+          html=p.read_text(encoding='utf-8')
+          for value in ['12.5K','$2.4M','25.6K','+18']:
+              html=html.replace('<b>'+value+'</b>','<b>—</b>')
+          p.write_text(html,encoding='utf-8')
+          PY
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Enviar site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+      - name: Publicar
+        id: deploy
+        uses: actions/deploy-pages@v4
