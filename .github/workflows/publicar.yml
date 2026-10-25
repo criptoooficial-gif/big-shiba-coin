@@ -36,6 +36,7 @@ jobs:
               html=html.replace('<b>'+value+'</b>','<b>—</b>')
           p.write_text(html,encoding='utf-8')
           PY
+          python3 tools/wallet_slots.py public/index.html
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
       - name: Enviar site
